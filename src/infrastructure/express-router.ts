@@ -1,30 +1,29 @@
-import { Router }  from 'express';
-import { MessageInterface } from '../message/messageInterface';
-import { MessageRouter }  from '../message/messageRouter';
-import { MessageController }  from '../message/messageController';
+import { Router } from "express";
+import { MessageInterface } from "../message/message-interface";
+import { MessageRouter } from "../message/message-router";
+import { MessageController } from "../message/message-controller";
 
 export class ExpressRouter {
-    router = Router();
+  router = Router();
 
-    private messageController!: MessageController;
-    private messageRouter!: MessageRouter;
+  private messageController!: MessageController;
+  private messageRouter!: MessageRouter;
 
-    constructor(private messageInterface: MessageInterface) { 
-        this.configureControllers();
-        this.configureRouters(); 
-        this.configureRoutes(); 
-    }
+  constructor(private messageInterface: MessageInterface) {
+    this.configureControllers();
+    this.configureRouters();
+    this.configureRoutes();
+  }
 
-    private configureControllers(): void {
-        this.messageController = new MessageController(this.messageInterface);
-    }
-    
+  private configureControllers(): void {
+    this.messageController = new MessageController(this.messageInterface);
+  }
 
-    private configureRouters(): void {
-        this.messageRouter = new MessageRouter(this.messageController);
-    }
+  private configureRouters(): void {
+    this.messageRouter = new MessageRouter(this.messageController);
+  }
 
-    private configureRoutes(): void {
-        this.router.use('/message', this.messageRouter.router);
-    }
+  private configureRoutes(): void {
+    this.router.use("/message", this.messageRouter.router);
+  }
 }
