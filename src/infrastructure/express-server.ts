@@ -1,4 +1,4 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import cors, { CorsOptions } from "cors";
 import { ExpressRouter } from "./express-router";
 import swaggerUi from "swagger-ui-express";
@@ -12,6 +12,7 @@ export class ExpressServer {
     private allowedSubDomain: string[]
   ) {
     this.express.use(express.json());
+    this.express.use(urlencoded({ extended: false }));
     this.configureCorsPolicy();
     this.configureRoutes();
     this.setupSwagger();
