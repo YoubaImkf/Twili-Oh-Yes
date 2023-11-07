@@ -31,9 +31,12 @@ export class MessageRouter {
         });
 
         this.router.post('/incoming', async (req: Request, res: Response, next: NextFunction) => {
-            const { body, from } = req.body;            
+            const smsSid = req.body.SmsSid;
+            const from = req.body.From;
+            const body = req.body.Body;
+            console.log('smssid:' + smsSid);
             try {
-                const result = await this.messageController.incomingMessage(body, from);
+                const result = await this.messageController.incomingMessage(body, from,smsSid);
 
                 res.status(200).json(result);
             } catch (error: unknown) {

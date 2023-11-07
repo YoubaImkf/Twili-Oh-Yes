@@ -1,11 +1,17 @@
 import { Message } from './message';
 import { MessageInterface } from './message-interface';
 import redisClient from '../infrastructure/redis-config.ts';
-import twilio from 'twilio';
+import twilio, { Twilio } from 'twilio';
+import { MessageInstance } from 'twilio/lib/rest/api/v2010/account/message';
 
 export class MessageService implements MessageInterface {
+    private twilioClient: Twilio;
+    private readonly accountSid = process.env.TWILIO_ACCOUNT_SID;
+    private readonly authToken = process.env.TWILIO_AUTH_TOKEN;
 
-    constructor() {}   
+    constructor() {
+        this.twilioClient = twilio(this.accountSid, this.authToken);
+    }   
 
     public async getMessageFromRedis(key: string): Promise<string | null> {
         // Example of getting a message from Redis
@@ -13,30 +19,36 @@ export class MessageService implements MessageInterface {
     }
 
     public async outgoingMessage(body: string, to: string): Promise<Message> {
+        const twilioMessage = await this.sendMessageViaTwilio(body, to);
+
         const message = new Message(
             Date.now(), 
-            process.env.TWILIO_PHONE_NUMBER,
+            twilioMessage.sid,
+            twilioMessage.from,
             to, 
             body, 
             new Date());
 
-        const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-
-        await this.sendMessageViaTwilio(twilioClient, message, to);
         await this.storeMessageInRedis(message);
 
         return message;
     }
 
-    public async incomingMessage(body: string, from: string): Promise<Message> {
+    public async incomingMessage(body: string, from: string, smsSid: string): Promise<Message> {
         console.log('Body:', body); // Log the 'body' parameter
         console.log('From:', from); // Log the 'from' parameter
-        // getTWilioMesssageASync(smssid)
+
+        console.log(smsSid)
+        let twilioMessage = this.getTWilioMesssageAsync(smsSid);
+
+        console.log(twilioMessage)
+
         const message = new Message(
             Date.now(),
+            (await twilioMessage).sid,
             from,
             process.env.TWILIO_PHONE_NUMBER,
-            body,
+            (await twilioMessage).body,
             new Date()
         );
 
@@ -45,15 +57,29 @@ export class MessageService implements MessageInterface {
         return message;
     }
 
-    private async sendMessageViaTwilio(twilioClient: any, message: Message, to: string): Promise<void> {
-        const twilioMessage = await twilioClient.messages.create({
-            body: message.Body,
+    private async sendMessageViaTwilio(body: string, to: string): Promise<MessageInstance> {
+        const twilioMessage = await this.twilioClient.messages.create({
+            body: body,
             from: process.env.TWILIO_PHONE_NUMBER,
             to: `+33${to}`
         });
         console.log(`Message SID: ${twilioMessage.sid}`);
+
+        let createMsg = this.getTWilioMesssageAsync(twilioMessage.sid);
+
+        return createMsg;
     }
 
+    private async getTWilioMesssageAsync(smsSid: string) {
+        try {
+            const message = await this.twilioClient.messages(smsSid).fetch();
+            return message;
+        } catch (error) {
+            console.error('Error fetching Twilio message:', error); 
+            throw error; 
+        }
+    }
+    
     private async storeMessageInRedis(message: Message): Promise<void> {
         const hashKey = `message:${message.Id}`;
         const hashValue = JSON.stringify(message);

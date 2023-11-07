@@ -17,7 +17,7 @@ export class MessageController {
         return await this.messageInterface.outgoingMessage(body, to);
     }
 
-    async incomingMessage(body: string, from: string): Promise<Message> {
-        return await this.messageInterface.incomingMessage(body, from);
+    async incomingMessage(body: string, from: string, smsSid: string): Promise<Message> {
+        return await this.messageInterface.incomingMessage(body, from, smsSid);
     }
 }
