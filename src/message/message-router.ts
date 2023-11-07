@@ -21,6 +21,7 @@ export class MessageRouter {
         
         this.router.post('/outgoing', async (req: Request, res: Response, next: NextFunction) => {
             const { body, to } = req.body;
+            
             try {
                 const result = await this.messageController.outgoingMessage(body, to);
                 res.status(200).json(result);
@@ -30,9 +31,10 @@ export class MessageRouter {
         });
 
         this.router.post('/incoming', async (req: Request, res: Response, next: NextFunction) => {
-            const { body, to } = req.body;
+            const { body, from } = req.body;            
             try {
-                const result = await this.messageController.outgoingMessage(body, to);
+                const result = await this.messageController.incomingMessage(body, from);
+
                 res.status(200).json(result);
             } catch (error: unknown) {
                 next(error);

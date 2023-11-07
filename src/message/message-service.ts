@@ -28,7 +28,10 @@ export class MessageService implements MessageInterface {
         return message;
     }
 
-    public async incomingMessage(from: string,  body: string): Promise<Message> {
+    public async incomingMessage(body: string, from: string): Promise<Message> {
+        console.log('Body:', body); // Log the 'body' parameter
+        console.log('From:', from); // Log the 'from' parameter
+        // getTWilioMesssageASync(smssid)
         const message = new Message(
             Date.now(),
             from,

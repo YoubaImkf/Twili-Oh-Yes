@@ -6,7 +6,7 @@ const baseURL = process.env.NGROK_BASE_URL || 'http://localhost:3000';
   const doc = {
     info: {
       version: '1.0.0',        
-      title: 'My Web API',  
+      title: 'Twili-Oh-Yes',  
       description: 'API documentation using Swagger'
     },
     servers: [
