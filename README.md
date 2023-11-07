@@ -1,72 +1,28 @@
-# Express/vue Project
+# Twili-Oh-Yes 
 
 ## Introduction 
-Integrating Twilio's API, users can send and receive SMS messages directly from the web interface. 
+Integrating Twilio's API, users can send and receive SMS messages directly from a web interface. 
 
-‎ 
-##  Pre-requisites :package:
 
-You need to have **Node.js** installed 
+###  Pre-requisites :package:
+You need to have :
+* **Node.js** installed with npm;
+* [ngrok](https://ngrok.com/download): A free account is all that's necessary to get your authentification token;
+* Twilio account : to have your own free phone number;
 ‎ 
-To install all dependencies
+
+To install all dependencies :
 ```bash
 npm install
-```
-‎ 
+``` 
+‎
+## Configuration 
 
-<details> <summary>📝 Click to see all the mandatory dependencies</summary> 
+**I) Add a .env file to the folder project source.**
 
-- [Express](https://www.npmjs.com/package/express) :
-    ```bash
-    npm install express
-    ```
+- Here a example of `.env ` file 📄
 
-- [Swagger Autogen](https://swagger-autogen.github.io/docs/getting-started/advanced-usage) :
-    ```bash
-    npm install --save-dev swagger-autogen
-    ```
-
-- [Swagger ui express](https://www.npmjs.com/package/swagger-ui-express) :
-    ```bash
-    npm install --save-dev swagger-ui-express
-    ```
-
-- [Dotenv](https://www.npmjs.com/package/dotenv) :
-    ```bash
-    npm install dotenv --save
-    ```
-
-- [Cors](https://www.npmjs.com/package/cors) :
-    ```bash
-    npm install cors
-    ```
-
-- [Redis](https://www.npmjs.com/package/redis-om)
-    ```bash
-    npm install redis-om
-    ```
-    
-    ```bash
-    npm install redis
-    ```
-
-‎ 
-**Dev dependencies :**
-```bash
-npm install --save-dev @types/cors @types/express @types/jest @types/node @types/swagger-jsdoc @types/swagger-ui-express jest swagger-autogen ts-jest ts-node-dev
-```
-
-
-</details>
-
-‎ 
-‎ 
-
-
-- Add a .env file to the frolder project source.
-
-- 📄Here a sample of the `.env ` file
-    ```
+    ```=
     NGROK_BASE_URL=
     PORT=3000
 
@@ -82,3 +38,48 @@ npm install --save-dev @types/cors @types/express @types/jest @types/node @types
     TWILIO_ACCOUNT_SID=
     TWILIO_AUTH_TOKEN=
     ```
+‎ 
+**II) Login to your Twilio account**
+‎ 
+1 ) In order to access your Twilio account and being able to run the script `.\UpdateTwilioWebhooks.ps1`, you need to provide your Twilio credentials to the CLI. 
+This can be done by running this command:
+
+```bash
+twilio login
+```
+
+You will be prompted for your *Account SID* and *Auth Token*, Notice that you must use the secret values *Twilio–AccountSid* & *Twilio–AuthToken*, that you can find on twilio.
+
+#### Answer The Prompt:
+```bash
+... 
+? The Account SID for your Twilio Account or Subaccount: Twilio–AccountSid
+? Your Twilio Auth Token for your Twilio Account or Subaccount: Twilio–AuthToken[hidden]
+? Shorthand identifier for your profile: identifier(example: firstname.lastname)
+...
+```
+*identifier is the ID of your key*
+
+This will create an API Key for you that will be stored securely for future use.
+‎
+
+2 ) Now you need to active your profile
+
+Go to the project -- Write powershell in the navigation bar to open a powershell -- Active your Twilio profile Opens in new window or tab by running this command twilio profiles:identifier
+
+ #### The Output :
+```bash!
+set "identifier" as active profile
+You can check if your profile is really active by running twilio profiles:list, if the section active is true all is fine.
+```
+
+3 ) Install ngrok
+- [Create an account ](https://dashboard.ngrok.com/signup)
+- Download : ngrok Opens in new window or tab
+- Extract ngrok.zip
+
+Use powershell :
+
+```bash
+./ngrok authtoken [your_ngrok_token]
+```
