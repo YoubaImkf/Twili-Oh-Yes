@@ -10,9 +10,18 @@ export class MessageRouter {
 
     private configureRoutes(): void {
 
+        this.router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+            try {
+                const result = await this.messageController.getAllAsync();
+                res.status(200).json(result);
+            } catch (error: unknown) {
+                next(error);
+            }
+        });
+
         this.router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
             try {
-                const result = await this.messageController.getMessageFromRedis(req.params.id);
+                const result = await this.messageController.getAsync(req.params.id);
                 res.status(200).json(result);
             } catch (error: unknown) {
                 next(error);
@@ -23,7 +32,7 @@ export class MessageRouter {
             const { body, to } = req.body;
             
             try {
-                const result = await this.messageController.outgoingMessage(body, to);
+                const result = await this.messageController.outgoing(body, to);
                 res.status(200).json(result);
             } catch (error: unknown) {
                 next(error);
@@ -32,11 +41,9 @@ export class MessageRouter {
 
         this.router.post('/incoming', async (req: Request, res: Response, next: NextFunction) => {
             const smsSid = req.body.SmsSid;
-            const from = req.body.From;
-            const body = req.body.Body;
-            console.log('smssid:' + smsSid);
+
             try {
-                const result = await this.messageController.incomingMessage(body, from,smsSid);
+                const result = await this.messageController.incoming(smsSid);
 
                 res.status(200).json(result);
             } catch (error: unknown) {

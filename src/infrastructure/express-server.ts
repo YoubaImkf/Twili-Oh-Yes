@@ -15,7 +15,7 @@ export class ExpressServer {
     this.express.use(urlencoded({ extended: false }));
     this.configureCorsPolicy();
     this.configureRoutes();
-    this.setupSwagger();
+    this.configureSwagger();
   }
 
   bootstrap(): void {
@@ -44,8 +44,8 @@ export class ExpressServer {
     this.express.use(cors(corsOptions));
   }
 
-  private setupSwagger(): void {
-    const swaggerDocument = require("../configuration/swagger/swagger.json");
+  private configureSwagger(): void {
+    const swaggerDocument = require("../configuration/swagger/swagger-output.json");
     this.express.use(
       "/swagger",
       swaggerUi.serve,
