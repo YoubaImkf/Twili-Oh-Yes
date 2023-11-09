@@ -11,12 +11,6 @@
       "description": ""
     }
   ],
-  "tags": [
-    {
-      "name": "MessageController",
-      "description": "Endpoints related to messages"
-    }
-  ],
   "paths": {
     "/": {
       "get": {

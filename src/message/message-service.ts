@@ -1,6 +1,6 @@
 import { Message } from "./message";
 import { MessageInterface } from "./message-interface";
-import redisClient from "../infrastructure/redis-config";
+import redisClient from "../configuration/redis-config";
 import twilio, { Twilio } from "twilio";
 import { MessageInstance } from "twilio/lib/rest/api/v2010/account/message";
 

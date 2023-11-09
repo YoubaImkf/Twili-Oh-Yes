@@ -3,14 +3,19 @@ import { ExpressRouter } from "./express-router";
 import { MessageInterface } from "../message/message-interface";
 import { MessageService } from "../message/message-service";
 import * as dotenv from "dotenv";
+import { RedisClientInstance } from "../configuration/redis-config";
 
 export class ExpressApplication {
   private expressRouter!: ExpressRouter;
+  private server!: ExpressServer;
+  private redisClient!: RedisClientInstance;
+  private messageInterface!: MessageInterface;
   private port!: string;
   private allowedSubDomain!: string[];
   private redisPassword!: string;
-  private server!: ExpressServer;
-  private messageInterface!: MessageInterface;
+  private redisHost!: string;
+  private redisPort!: number;
+
 
   constructor() {
     this.configureApplication();
@@ -24,7 +29,9 @@ export class ExpressApplication {
     this.configureEnvironment();
     this.configureServerPort();
     this.configureServerAllowedSubDomain();
+    this.configureRedisEnvironementVariables();
     this.configureServices();
+    this.configureRedis()
     this.configureExpressRouter();
     this.configureServer();   
   }
@@ -43,6 +50,12 @@ export class ExpressApplication {
     this.allowedSubDomain = this.getAllowedSubDomain();
   }
 
+  private configureRedisEnvironementVariables(): void {
+    this.redisPassword = this.getRedisPassword();
+    this.redisHost = this.getRedisHost();
+    this.redisPort = this.getRedisPort();
+  }
+
   private configureServices(): void {
     this.messageInterface = new MessageService();
   }
@@ -59,7 +72,16 @@ export class ExpressApplication {
     );
   }
 
-  //#region GET variabel in .env Method
+  private configureRedis(): void {
+    this.redisClient = new RedisClientInstance(
+      this.redisPassword,
+      this.redisHost,
+      this.redisPort
+    );
+  }
+
+
+  //#region GET .env
   private getPort(): string {
     const port = process.env.PORT;
 
@@ -78,6 +100,36 @@ export class ExpressApplication {
     }
 
     return allowedSubDomain.split(",");
+  }
+
+  private getRedisPassword(): string {
+    const password = process.env.REDIS_PASSWORD;
+
+    if (!password) {
+      throw new Error("No port was found in env file.");
+    }
+
+    return password;
+  }
+
+  private getRedisHost(): string {
+    const redisHost = process.env.REDIS_HOST;
+
+    if (!redisHost) {
+      throw new Error("No port was found in env file.");
+    }
+
+    return redisHost;
+  }
+
+  private getRedisPort(): number {
+    const redisPort = process.env.REDIS_PORT;
+
+    if (!redisPort) {
+      throw new Error("No port was found in env file.");
+    }
+
+    return parseInt(redisPort);
   }
   //#endregion
 }

@@ -4,7 +4,7 @@
   "description": "Final Project",
   "main": "index.js",
   "scripts": {
-    "dev": "node src/configuration/swagger/swagger.ts && npx ts-node-dev src/app.ts",
+    "dev": "node src/configuration/swagger-config.ts && npx ts-node-dev src/app.ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "test": "jest --passWithNoTests"
   },
