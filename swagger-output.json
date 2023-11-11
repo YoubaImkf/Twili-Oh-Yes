@@ -22,12 +22,30 @@
         }
       }
     },
-    "/{id}": {
+    "/{SmsSid}": {
       "get": {
         "description": "",
         "parameters": [
           {
-            "name": "id",
+            "name": "SmsSid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "SmsSid",
             "in": "path",
             "required": true,
             "schema": {
