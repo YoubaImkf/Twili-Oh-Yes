@@ -1,6 +1,6 @@
-import { Message } from "./message";
-import { MessageInterface } from "./message-interface";
-import redisClient from "../configuration/redis-config";
+import { Message } from "./Message";
+import { MessageInterface } from "./MessageInterface";
+import redisClient from "../Configurations/RedisConfiguration";
 import twilio, { Twilio } from "twilio";
 import { MessageInstance } from "twilio/lib/rest/api/v2010/account/message";
 
@@ -13,9 +13,18 @@ export class MessageService implements MessageInterface {
     this.twilioClient = twilio(this.accountSid, this.authToken);
   }
 
-  public async getMessageAsync(key: string): Promise<string | null> {
-    var message = await redisClient.get(key);
-    return JSON.parse(message);
+  public async getMessageAsync(smsSid: string): Promise<Message | null> {
+    var twilioMessage = await this.getTwilioMessage(smsSid);
+    const message = new Message(
+      Date.now(),
+      twilioMessage.sid,
+      twilioMessage.from,
+      twilioMessage.to,
+      twilioMessage.body,
+      twilioMessage.dateCreated                                  
+    );
+    
+    return message;
   }
 
   public async getAllMessagesAsync(): Promise<Message[]> {
@@ -38,8 +47,21 @@ export class MessageService implements MessageInterface {
     }
   }
 
+  public async deleteMessageAsync(smsSid: string): Promise<void> {
+    try {
+      const message = await this.getTwilioMessage(smsSid);
+      await redisClient.del(smsSid);
+
+      await this.twilioClient.messages(message.sid).remove();
+
+    } catch (error) {
+      console.error("Error deleting message from Redis:", error);
+      throw error;
+    }
+  }
+
   public async outgoingMessage(body: string, to: string): Promise<Message> {
-    const twilioMessage = await this.sendMessageViaTwilio(body, to);
+    const twilioMessage = await this.sendTwilioMessage(body, to);
 
     const message = new Message(
       Date.now(),
@@ -56,7 +78,7 @@ export class MessageService implements MessageInterface {
   }
 
   public async incomingMessage(smsSid: string): Promise<Message> {
-    let twilioMessage = this.getTWilioMesssageAsync(smsSid);
+    let twilioMessage = this.getTwilioMessage(smsSid);
 
     console.log(twilioMessage);
 
@@ -76,7 +98,7 @@ export class MessageService implements MessageInterface {
 
   //#region Private Methods
 
-  private async sendMessageViaTwilio(
+  private async sendTwilioMessage(
     body: string,
     to: string
   ): Promise<MessageInstance> {
@@ -87,12 +109,12 @@ export class MessageService implements MessageInterface {
     });
     console.log(`Message SID: ${message.sid}`);
 
-    let createMsg = this.getTWilioMesssageAsync(message.sid);
+    let createMsg = this.getTwilioMessage(message.sid);
 
     return createMsg;
   }
 
-  private async getTWilioMesssageAsync(smsSid: string) {
+  private async getTwilioMessage(smsSid: string) {
     try {
       const message = await this.twilioClient.messages(smsSid).fetch();
       return message;

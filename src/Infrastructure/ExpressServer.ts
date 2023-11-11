@@ -1,6 +1,6 @@
 import express, { urlencoded } from "express";
 import cors, { CorsOptions } from "cors";
-import { ExpressRouter } from "./express-router";
+import { ExpressRouter } from "./ExpressRouter";
 import swaggerUi from "swagger-ui-express";
 
 export class ExpressServer {

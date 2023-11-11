@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { MessageInterface } from "../message/message-interface";
-import { MessageRouter } from "../message/message-router";
-import { MessageController } from "../message/message-controller";
+import { MessageInterface } from "../Message/MessageInterface";
+import { MessageRouter } from "../Message/MessageRouter";
+import { MessageController } from "../Message/MessageController";
 
 export class ExpressRouter {
   router = Router();

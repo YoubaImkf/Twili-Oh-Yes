@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { MessageController } from './message-controller';
+import { MessageController } from './MessageController';
 
 export class MessageRouter {
     router = Router();
@@ -19,15 +19,36 @@ export class MessageRouter {
             }
         });
 
-        this.router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
+        this.router.get('/:SmsSid', async (req: Request, res: Response, next: NextFunction) => {
             try {
-                const result = await this.messageController.getAsync(req.params.id);
-                res.status(200).json(result);
+                let smsSid = req.params.SmsSid
+                const result = await this.messageController.getAsync(smsSid);
+
+                if(result != null)
+                    res.status(200).json(result);
+                else
+                    res.status(404).json(`The message with the sid:${smsSid} was not found`)
+
             } catch (error: unknown) {
                 next(error);
             }
         });
-        
+
+        this.router.delete('/:SmsSid', async (req: Request, res: Response, next: NextFunction) => {
+            try {
+                let smsSid = req.params.SmsSid
+                const result = await this.messageController.deleteAsync(smsSid);
+
+                if(result != null)
+                    res.status(200).json(result);
+                else
+                    res.status(404).json(`The message with the sid:${smsSid} was not found`)
+
+            } catch (error: unknown) {
+                next(error);
+            }
+        });
+
         this.router.post('/outgoing', async (req: Request, res: Response, next: NextFunction) => {
             const { body, to } = req.body;
             

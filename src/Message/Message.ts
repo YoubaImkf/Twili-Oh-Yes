@@ -5,6 +5,7 @@ export class Message {
         public From: string | undefined,
         public To: string | undefined,
         public Body: string,
-        public CreatedDate: Date
+        public CreatedDate: Date,
+        public Direction?: string,
     ) {}
 }
