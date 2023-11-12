@@ -1,4 +1,3 @@
-swagger.json
 # Logs
 logs
 *.log
@@ -7,6 +6,10 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
+
+# Swagger 
+swagger-output.json
+# Test
 test
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
@@ -130,3 +133,5 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+swagger-output.json
+swagger-output.json
