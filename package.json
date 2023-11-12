@@ -4,7 +4,7 @@
   "description": "Final school project",
   "main": "index.js",
   "scripts": {
-    "dev": "node src/configuration/swagger-config.ts && npx ts-node-dev src/app.ts",
+    "dev": "node src/Configurations/SwaggerConfiguration.ts && npx ts-node-dev src/App.ts",
     "test": "jest --passWithNoTests"
   },
   "keywords": [],
