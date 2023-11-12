@@ -3,73 +3,60 @@ import { MessageInterface } from "./MessageInterface";
 import redisClient from "../Configurations/RedisConfiguration";
 import twilio, { Twilio } from "twilio";
 import { MessageInstance } from "twilio/lib/rest/api/v2010/account/message";
+import { NotFound } from "http-errors";
 
 export class MessageService implements MessageInterface {
-  private twilioClient: Twilio;
-  private readonly accountSid = process.env.TWILIO_ACCOUNT_SID;
-  private readonly authToken = process.env.TWILIO_AUTH_TOKEN;
+  private readonly twilioClient: Twilio;
 
   constructor() {
-    this.twilioClient = twilio(this.accountSid, this.authToken);
+    this.twilioClient = this.initializeTwilio();
   }
 
-  public async getMessageAsync(smsSid: string): Promise<Message | null> {
-    var twilioMessage = await this.getTwilioMessage(smsSid);
-    const message = new Message(
-      Date.now(),
-      twilioMessage.sid,
-      twilioMessage.from,
-      twilioMessage.to,
-      twilioMessage.body,
-      twilioMessage.dateCreated                                  
-    );
-    
+  public async getMessageAsync(key: string): Promise<Message | null> {
+    const redisKey = `message:${key}`;
+    const messageString = await redisClient.get(redisKey);
+    if (!messageString) {
+      throw new NotFound(`Message with key ${key} not found`);
+    }
+    const message = JSON.parse(messageString);
     return message;
   }
 
   public async getAllMessagesAsync(): Promise<Message[]> {
-    try {
-      const name = "message:*";
-      const keys = await redisClient.keys(name);
-      const messages: Message[] = [];
+    const keys = await redisClient.keys("message:*");
+    const messages: Message[] = [];
 
-      for (const key of keys) {
-        const messageString = await redisClient.get(key);
-        if (messageString) {
-          const message = JSON.parse(messageString);
-          messages.push(message);
-        }
+    for (const key of keys) {
+      const messageString = await redisClient.get(key);
+      if (messageString) {
+        const message = JSON.parse(messageString);
+        messages.push(message);
       }
-      return messages;
-    } catch (error) {
-      console.error("Error retrieving messages from Redis:", error);
-      throw error;
     }
+
+    return messages;
   }
 
-  public async deleteMessageAsync(smsSid: string): Promise<void> {
-    try {
-      const message = await this.getTwilioMessage(smsSid);
-      await redisClient.del(smsSid);
+  public async deleteMessageAsync(key: string): Promise<void | null> {
+    const message = await this.getMessageAsync(key);
+    const redisKey = `message:${key}`;
 
-      await this.twilioClient.messages(message.sid).remove();
-
-    } catch (error) {
-      console.error("Error deleting message from Redis:", error);
-      throw error;
+    if (!message) {
+      throw new NotFound(`Message with key ${key} not found`);
     }
+    await redisClient.del(redisKey);
+
+    // if (message?.SmsSid) {
+    //   await this.twilioClient.messages(message.SmsSid).remove();
+    // }
   }
 
   public async outgoingMessage(body: string, to: string): Promise<Message> {
     const twilioMessage = await this.sendTwilioMessage(body, to);
-
-    const message = new Message(
-      Date.now(),
-      twilioMessage.sid,
-      twilioMessage.from,
+    const message = this.createMessageFromTwilio(
+      twilioMessage,
       to,
-      body,
-      new Date()
+      body
     );
 
     await this.storeMessageInRedis(message);
@@ -78,25 +65,24 @@ export class MessageService implements MessageInterface {
   }
 
   public async incomingMessage(smsSid: string): Promise<Message> {
-    let twilioMessage = this.getTwilioMessage(smsSid);
-
-    console.log(twilioMessage);
-
-    const message = new Message(
-      Date.now(),
-      (await twilioMessage).sid,
-      (await twilioMessage).from,
-      process.env.TWILIO_PHONE_NUMBER,
-      (await twilioMessage).body,
-      new Date()
+    const twilioMessage = await this.getTwilioMessage(smsSid);
+    const message = this.createMessageFromTwilio(
+      twilioMessage,
+      twilioMessage.to,
+      twilioMessage.body
     );
-
     await this.storeMessageInRedis(message);
-
     return message;
   }
 
-  //#region Private Methods
+  private initializeTwilio(): Twilio {
+    const accountSid = process.env.TWILIO_ACCOUNT_SID || "";
+    const authToken = process.env.TWILIO_AUTH_TOKEN || "";
+    if (!accountSid || !authToken) {
+      throw new Error("TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN are required.");
+    }
+    return twilio(accountSid, authToken);
+  }
 
   private async sendTwilioMessage(
     body: string,
@@ -104,32 +90,36 @@ export class MessageService implements MessageInterface {
   ): Promise<MessageInstance> {
     const message = await this.twilioClient.messages.create({
       body: body,
-      from: process.env.TWILIO_PHONE_NUMBER,
+      from: process.env.TWILIO_PHONE_NUMBER || "",
       to: `+33${to}`,
     });
-    console.log(`Message SID: ${message.sid}`);
 
-    let createMsg = this.getTwilioMessage(message.sid);
-
-    return createMsg;
+    return this.getTwilioMessage(message.sid);
   }
 
-  private async getTwilioMessage(smsSid: string) {
-    try {
-      const message = await this.twilioClient.messages(smsSid).fetch();
-      return message;
-    } catch (error) {
-      console.error("Error fetching Twilio message:", error);
-      throw error;
-    }
+  private async getTwilioMessage(smsSid: string): Promise<MessageInstance> {
+    const message = await this.twilioClient.messages(smsSid).fetch();
+    return message;
+  }
+
+  private createMessageFromTwilio(
+    twilioMessage: MessageInstance,
+    to: string,
+    body: string
+  ): Message {
+    return new Message(
+      Date.now(),
+      twilioMessage.sid,
+      twilioMessage.from,
+      to,
+      body,
+      new Date()
+    );
   }
 
   private async storeMessageInRedis(message: Message): Promise<void> {
     const hashKey = `message:${message.Id}`;
     const hashValue = JSON.stringify(message);
-
     await redisClient.set(hashKey, hashValue);
   }
-
-  //#endregion
 }
