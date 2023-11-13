@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "> Script is running..."
-
+echo
 # Load environment variables from .env file
 source .env
 
@@ -19,7 +19,7 @@ echo "TwilioPhonenumberSid: $TwilioPhonenumberSid"
 ngrokApiUri="http://127.0.0.1:4040/api"
 TwilioTunnelsObject=$(curl -s "$ngrokApiUri/tunnels" | jq -r '.tunnels')
 PublicBaseUrl=$(echo "$TwilioTunnelsObject" | jq -r '.[] | select(.proto == "https").public_url')
-
+echo
 echo "$PublicBaseUrl"
 
 #  Modify the webhook of sms 
