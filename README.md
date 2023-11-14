@@ -43,6 +43,8 @@ npm install
 ### II) Login to your ngrok account
 ‎ 
 **1 ) [Install ngrok](https://ngrok.com/docs/getting-started/?os=linux)**
+ngrok will allow us to put our application on the internet.
+
 - [Create an account ](https://dashboard.ngrok.com/signup)
 - Download : ngrok Opens in new window or tab
 - Extract ngrok.zip
@@ -55,7 +57,7 @@ ngrok config add-authtoken <TOKEN>
 
 ### III) Login to your Twilio account
 
-**1 ) In order to access your Twilio account and being able to run the script** `.\UpdateTwilioWebhook.sh`, you need to provide your Twilio credentials to the CLI[(more details)](https://www.twilio.com/docs/twilio-cli/quickstart).
+**1 ) In order to access your Twilio account and being able to run the script** `.\UpdateTwilioWebhook.sh`, you need to provide your Twilio credentials to the CLI [(more details)](https://www.twilio.com/docs/twilio-cli/quickstart).
 
 This can be done by running this command:
 ```bash
