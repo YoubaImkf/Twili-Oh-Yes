@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { MessageController } from "./MessageController";
+import { MessageController } from "../Controllers/MessageController";
 import { NotFound } from "http-errors";
 
 export class MessageRouter {

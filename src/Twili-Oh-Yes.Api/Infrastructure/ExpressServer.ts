@@ -45,7 +45,7 @@ export class ExpressServer {
   }
 
   private configureSwagger(): void {
-    const swaggerDocument = require("../../swagger-output.json");
+    const swaggerDocument = require("../../../swagger-output.json");
     this.express.use(
       "/swagger",
       swaggerUi.serve,

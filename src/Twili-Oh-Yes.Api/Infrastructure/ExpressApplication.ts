@@ -1,7 +1,7 @@
 import { ExpressServer } from "./ExpressServer";
 import { ExpressRouter } from "./ExpressRouter";
-import { MessageInterface } from "../Message/MessageInterface";
-import { MessageService } from "../Message/MessageService";
+import { MessageInterface } from "../../Twili-Oh-Yes.Core/Interfaces/MessageInterface";
+import { MessageService } from "../../Twili-Oh-Yes.Core/Services/MessageService";
 import * as dotenv from "dotenv";
 
 export class ExpressApplication {

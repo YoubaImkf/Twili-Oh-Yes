@@ -1,3 +1,5 @@
+import { Direction } from "../Enums/Direction";
+
 export class Message {
     constructor(
         public Id: number,
@@ -6,6 +8,6 @@ export class Message {
         public To: string | undefined,
         public Body: string,
         public CreatedDate: Date,
-        public Direction?: string,
+        public Direction: Direction,
     ) {}
 }

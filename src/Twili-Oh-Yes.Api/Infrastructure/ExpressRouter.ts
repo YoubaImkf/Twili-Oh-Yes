@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { MessageInterface } from "../Message/MessageInterface";
-import { MessageRouter } from "../Message/MessageRouter";
-import { MessageController } from "../Message/MessageController";
+import { MessageInterface } from "../../Twili-Oh-Yes.Core/Interfaces/MessageInterface";
+import { MessageRouter } from "../Routers/MessageRouter";
+import { MessageController } from "../Controllers/MessageController";
 
 export class ExpressRouter {
   router = Router();

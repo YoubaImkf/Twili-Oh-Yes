@@ -1,4 +1,4 @@
-import { Message } from './Message';
+import { Message } from '../Entities/Message';
 
 export interface MessageInterface {
     getMessageAsync(smsSid: string): Promise<Message | null>;

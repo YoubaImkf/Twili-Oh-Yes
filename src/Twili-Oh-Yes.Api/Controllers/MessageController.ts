@@ -1,5 +1,5 @@
-import { Message } from "./Message";
-import { MessageInterface } from "./MessageInterface";
+import { Message } from "../../Twili-Oh-Yes.Core/Entities/Message";
+import { MessageInterface } from "../../Twili-Oh-Yes.Core/Interfaces/MessageInterface";
 
 export class MessageController {
   constructor(private messageInterface: MessageInterface) {}

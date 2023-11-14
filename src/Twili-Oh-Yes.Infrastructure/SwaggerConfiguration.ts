@@ -19,6 +19,6 @@ const doc = {
 };
 
 const outputFile = "../../swagger-output.json";
-const endpointsFiles = ["../Message/MessageRouter.ts"];
+const endpointsFiles = ["../Twili-Oh-Yes.Api/Routers/MessageRouter.ts"];
 
 swaggerAutogen(outputFile, endpointsFiles, doc);

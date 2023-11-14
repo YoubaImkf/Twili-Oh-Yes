@@ -1,9 +1,10 @@
-import { Message } from "./Message";
-import { MessageInterface } from "./MessageInterface";
-import redisClient from "../Configurations/RedisConfiguration";
+import { Message } from "../Entities/Message";
+import { MessageInterface } from "../Interfaces/MessageInterface";
+import redisClient from "../../Twili-Oh-Yes.Infrastructure/Data/RedisDatabase";
 import twilio, { Twilio } from "twilio";
 import { MessageInstance } from "twilio/lib/rest/api/v2010/account/message";
 import { NotFound } from "http-errors";
+import { Direction } from "../Enums/Direction";
 
 export class MessageService implements MessageInterface {
   private readonly twilioClient: Twilio;
@@ -46,9 +47,9 @@ export class MessageService implements MessageInterface {
     }
     await redisClient.del(redisKey);
 
-    // if (message?.SmsSid) {
-    //   await this.twilioClient.messages(message.SmsSid).remove();
-    // }
+    if (message?.SmsSid) {
+      await this.twilioClient.messages(message.SmsSid).remove();
+    }
   }
 
   public async outgoingMessage(body: string, to: string): Promise<Message> {
@@ -56,7 +57,8 @@ export class MessageService implements MessageInterface {
     const message = this.createMessageFromTwilio(
       twilioMessage,
       to,
-      body
+      body,
+      Direction.Outgoing
     );
 
     await this.storeMessageInRedis(message);
@@ -69,7 +71,8 @@ export class MessageService implements MessageInterface {
     const message = this.createMessageFromTwilio(
       twilioMessage,
       twilioMessage.to,
-      twilioMessage.body
+      twilioMessage.body,
+      Direction.Incoming
     );
     await this.storeMessageInRedis(message);
     return message;
@@ -105,7 +108,8 @@ export class MessageService implements MessageInterface {
   private createMessageFromTwilio(
     twilioMessage: MessageInstance,
     to: string,
-    body: string
+    body: string,
+    direction: Direction
   ): Message {
     return new Message(
       Date.now(),
@@ -113,7 +117,8 @@ export class MessageService implements MessageInterface {
       twilioMessage.from,
       to,
       body,
-      new Date()
+      new Date(),
+      direction
     );
   }
 
