@@ -40,7 +40,7 @@ npm install
     TWILIO_PHONE_NUMBER_SID=
     ```
 ‎ 
-### II) Login to your Twilio account
+### II) Login to your ngrok account
 ‎ 
 **1 ) [Install ngrok](https://ngrok.com/docs/getting-started/?os=linux)**
 - [Create an account ](https://dashboard.ngrok.com/signup)
@@ -53,7 +53,9 @@ Use terminal :
 ngrok config add-authtoken <TOKEN>
 ```
 
-**2 ) In order to access your Twilio account and being able to run the script** `.\UpdateTwilioWebhook.sh`, you need to provide your Twilio credentials to the CLI[(more details)](https://www.twilio.com/docs/twilio-cli/quickstart).
+### III) Login to your Twilio account
+
+**1 ) In order to access your Twilio account and being able to run the script** `.\UpdateTwilioWebhook.sh`, you need to provide your Twilio credentials to the CLI[(more details)](https://www.twilio.com/docs/twilio-cli/quickstart).
 
 This can be done by running this command:
 ```bash
@@ -76,7 +78,7 @@ You will be prompted for your `Account SID` and `Auth Token`, Notice that you mu
 
 ‎
 
-**3 ) Now you need to active your profile**
+**2 ) Now you need to active your profile**
 
 Open a terminal and active your Twilio profile by running this command :
 ```bash
