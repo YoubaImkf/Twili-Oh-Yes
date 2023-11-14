@@ -4,7 +4,7 @@
   "description": "Final school project",
   "main": "index.js",
   "scripts": {
-    "dev": "node src/Configurations/SwaggerConfiguration.ts && npx ts-node-dev src/App.ts",
+    "dev": "node src/Twili-Oh-Yes.Infrastructure/SwaggerConfiguration.ts && npx ts-node-dev src/Twili-Oh-Yes.Api/App.ts",
     "test": "jest --passWithNoTests"
   },
   "keywords": [],
@@ -17,7 +17,7 @@
     "redis": "^4.6.10",
     "redis-om": "^0.4.3",
     "swagger-ui-express": "^5.0.0",
-    "twilio": "^4.19.0"
+    "twilio": "^3.40.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.15",
