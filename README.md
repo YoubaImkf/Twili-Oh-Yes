@@ -18,7 +18,7 @@ npm install
 ‎
 ## Configuration 
 
-### I) Add a .env file to the folder project source.**
+### I) Add a .env file to the folder project source.
 
 - Here a example of `.env ` file 📄
 
@@ -34,7 +34,7 @@ npm install
     REDIS_PORT=
 
     # TWILIO
-    TWILIO_PHONE_NUMBER=1269205628
+    TWILIO_PHONE_NUMBER=
     TWILIO_ACCOUNT_SID=
     TWILIO_AUTH_TOKEN=
     TWILIO_PHONE_NUMBER_SID=
