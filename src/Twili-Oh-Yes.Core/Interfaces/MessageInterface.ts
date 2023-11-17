@@ -1,9 +1,10 @@
 import { Message } from '../Entities/Message';
 
 export interface MessageInterface {
-    getMessageAsync(smsSid: string): Promise<Message | null>;
+    getMessageAsync(key: number): Promise<Message | null>;
     getAllMessagesAsync(): Promise<Message[]>;
-    deleteMessageAsync(smsSid: string): Promise<void | null>;
+    deleteMessageAsync(key: number): Promise<void | null>;
+    updateMessageAsync(updatedMessage: Message): Promise<Message>;
     outgoingMessage(body: string, to: string): Promise<Message>;
     incomingMessage(smsSid: string): Promise<Message>;
 }

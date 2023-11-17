@@ -13,7 +13,7 @@ export class MessageService implements MessageInterface {
     this.twilioClient = this.initializeTwilio();
   }
 
-  public async getMessageAsync(key: string): Promise<Message | null> {
+  public async getMessageAsync(key: number): Promise<Message | null> {
     const redisKey = `message:${key}`;
     const messageString = await redisClient.get(redisKey);
     if (!messageString) {
@@ -38,7 +38,29 @@ export class MessageService implements MessageInterface {
     return messages;
   }
 
-  public async deleteMessageAsync(key: string): Promise<void | null> {
+  public async updateMessageAsync(updatedMessage: Message): Promise<Message> {
+    const existingMessage = await this.getMessageAsync(updatedMessage.Id);
+    if (!existingMessage) {
+      throw new NotFound(`Message with key ${updatedMessage.Id} not found`);
+    }
+
+    const twilioMessage = await this.sendTwilioMessage(updatedMessage.Body, updatedMessage.To);
+
+    const newMessage = this.createMessageFromTwilio(
+      twilioMessage,
+      updatedMessage.To,
+      updatedMessage.Body,
+      existingMessage.Direction
+    );
+
+    this.storeMessageInRedis(updatedMessage);
+
+    return newMessage;
+  }
+
+
+
+  public async deleteMessageAsync(key: number): Promise<void | null> {
     const message = await this.getMessageAsync(key);
     const redisKey = `message:${key}`;
 
