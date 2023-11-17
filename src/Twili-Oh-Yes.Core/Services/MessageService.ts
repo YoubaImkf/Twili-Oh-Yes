@@ -13,7 +13,7 @@ export class MessageService implements MessageInterface {
     this.twilioClient = this.initializeTwilio();
   }
 
-  public async getMessageAsync(key: number): Promise<Message | null> {
+  public async getMessageAsync(key: number): Promise<Message> {
     const redisKey = `message:${key}`;
     const messageString = await redisClient.get(redisKey);
     if (!messageString) {
@@ -40,10 +40,7 @@ export class MessageService implements MessageInterface {
 
   public async updateMessageAsync(updatedMessage: Message): Promise<Message> {
     const existingMessage = await this.getMessageAsync(updatedMessage.Id);
-    if (!existingMessage) {
-      throw new NotFound(`Message with key ${updatedMessage.Id} not found`);
-    }
-
+    
     const twilioMessage = await this.sendTwilioMessage(updatedMessage.Body, updatedMessage.To);
 
     const newMessage = this.createMessageFromTwilio(
@@ -58,22 +55,11 @@ export class MessageService implements MessageInterface {
     return newMessage;
   }
 
-
-
-  public async deleteMessageAsync(key: number): Promise<void | null> {
-    const message = await this.getMessageAsync(key);
-    const redisKey = `message:${key}`;
-
-    if (!message) {
-      throw new NotFound(`Message with key ${key} not found`);
-    }
-    await redisClient.del(redisKey);
-
-    if (message?.SmsSid) {
-      await this.twilioClient.messages(message.SmsSid).remove();
-    }
+  public async deleteMessageAsync(key: number): Promise<void> {
+      await this.deleteMessageFromRedis(key);
+      await this.deleteMessageFromTwilio(key);      
   }
-
+  
   public async outgoingMessage(body: string, to: string): Promise<Message> {
     const twilioMessage = await this.sendTwilioMessage(body, to);
     const message = this.createMessageFromTwilio(
@@ -100,6 +86,7 @@ export class MessageService implements MessageInterface {
     return message;
   }
 
+  //#region Private 
   private initializeTwilio(): Twilio {
     const accountSid = process.env.TWILIO_ACCOUNT_SID || "";
     const authToken = process.env.TWILIO_AUTH_TOKEN || "";
@@ -109,10 +96,7 @@ export class MessageService implements MessageInterface {
     return twilio(accountSid, authToken);
   }
 
-  private async sendTwilioMessage(
-    body: string,
-    to: string
-  ): Promise<MessageInstance> {
+  private async sendTwilioMessage(body: string, to: string): Promise<MessageInstance> {
     const message = await this.twilioClient.messages.create({
       body: body,
       from: process.env.TWILIO_PHONE_NUMBER || "",
@@ -149,4 +133,18 @@ export class MessageService implements MessageInterface {
     const hashValue = JSON.stringify(message);
     await redisClient.set(hashKey, hashValue);
   }
+
+  private async deleteMessageFromRedis(key: number): Promise<void> {
+    const redisKey = `message:${key}`;
+    await redisClient.del(redisKey);
+  }
+  
+  private async deleteMessageFromTwilio(key: number): Promise<void> {
+    const message = await this.getMessageAsync(key);
+  
+    if (message?.SmsSid) {
+      await this.twilioClient.messages(message.SmsSid).remove();
+    }
+  }
+  //#endregion
 }

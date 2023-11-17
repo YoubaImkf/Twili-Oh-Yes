@@ -11,7 +11,7 @@ export class MessageRouter {
     }
 
     private configureRoutes(): void {
-        this.router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+        this.router.get("/", async (res: Response) => {
             try {
                 const result = await this.messageController.getAllAsync();
                 res.status(200).json(result);
@@ -20,7 +20,7 @@ export class MessageRouter {
             }
         });
 
-        this.router.get("/:key", async (req: Request, res: Response, next: NextFunction) => {
+        this.router.get("/:key", async (req: Request, res: Response) => {
             try {
                 const key = Number(req.params.key);
                 const result = await this.messageController.getAsync(key);  
@@ -35,7 +35,7 @@ export class MessageRouter {
               }
         });
 
-        this.router.delete("/:key", async (req: Request, res: Response, next: NextFunction) => {
+        this.router.delete("/:key", async (req: Request, res: Response) => {
             try {
                 const key = Number(req.params.key);
                 await this.messageController.deleteAsync(key);
@@ -50,7 +50,7 @@ export class MessageRouter {
               }
         });
 
-        this.router.put("/", async (req: Request, res: Response, next: NextFunction) => {
+        this.router.put("/", async (req: Request, res: Response) => {
             try {
                 const updatedMessage = new Message(
                     req.body.Id,
@@ -74,7 +74,7 @@ export class MessageRouter {
             }
         });
 
-        this.router.post("/outgoing", async (req: Request, res: Response, next: NextFunction) => {
+        this.router.post("/outgoing", async (req: Request, res: Response) => {
             const { body, to } = req.body;
 
             try {
