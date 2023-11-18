@@ -11,7 +11,8 @@ export class MessageRouter {
     }
 
     private configureRoutes(): void {
-        this.router.get("/", async (res: Response) => {
+        this.router.get("/", async (res: Response) => { // #swagger.tags = ['Message']
+            
             try {
                 const result = await this.messageController.getAllAsync();
                 res.status(200).json(result);
@@ -20,7 +21,7 @@ export class MessageRouter {
             }
         });
 
-        this.router.get("/:key", async (req: Request, res: Response) => {
+        this.router.get("/:key", async (req: Request, res: Response) => { // #swagger.tags = ['Message']
             try {
                 const key = Number(req.params.key);
                 const result = await this.messageController.getAsync(key);  
@@ -35,7 +36,7 @@ export class MessageRouter {
               }
         });
 
-        this.router.delete("/:key", async (req: Request, res: Response) => {
+        this.router.delete("/:key", async (req: Request, res: Response) => { // #swagger.tags = ['Message']
             try {
                 const key = Number(req.params.key);
                 await this.messageController.deleteAsync(key);
@@ -50,7 +51,7 @@ export class MessageRouter {
               }
         });
 
-        this.router.put("/", async (req: Request, res: Response) => {
+        this.router.put("/", async (req: Request, res: Response) => { // #swagger.tags = ['Message']
             try {
                 const updatedMessage = new Message(
                     req.body.Id,
@@ -74,7 +75,7 @@ export class MessageRouter {
             }
         });
 
-        this.router.post("/outgoing", async (req: Request, res: Response) => {
+        this.router.post("/outgoing", async (req: Request, res: Response) => { // #swagger.tags = ['Message']
             const { body, to } = req.body;
 
             try {
@@ -85,7 +86,7 @@ export class MessageRouter {
             }
         });
 
-        this.router.post("/incoming", async (req: Request, res: Response, next: NextFunction) => {
+        this.router.post("/incoming", async (req: Request, res: Response) => { // #swagger.tags = ['Message']
             const smsSid = req.body.SmsSid;
             try {
                 const result = await this.messageController.incoming(smsSid);

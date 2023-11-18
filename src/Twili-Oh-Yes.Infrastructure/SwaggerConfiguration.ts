@@ -7,15 +7,14 @@ const doc = {
   info: {
     version: "1.0.0",
     title: "Twili-Oh-Yes",
-    description: "API documentation using Swagger",
+    description: "Sms chat API",
   },
   servers: [
     {
       url: `${baseURL}/api/message`,
-      description: "",
+
     },
   ],
-  
 };
 
 const outputFile = "../../swagger-output.json";
