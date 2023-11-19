@@ -11,7 +11,7 @@ export class MessageRouter {
     }
 
     private configureRoutes(): void {
-        this.router.get("/", async (res: Response) => { // #swagger.tags = ['Message']
+        this.router.get("/", async (req: Request,res: Response) => { // #swagger.tags = ['Message']
             
             try {
                 const result = await this.messageController.getAllAsync();
