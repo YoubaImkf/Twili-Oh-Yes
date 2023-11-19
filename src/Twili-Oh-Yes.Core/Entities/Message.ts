@@ -4,7 +4,7 @@ export class Message {
     constructor(
         public Id: number,
         public SmsSid: string,
-        public From: string | undefined,
+        public From: string,
         public To: string,
         public Body: string,
         public CreatedDate: Date,
