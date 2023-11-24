@@ -87,9 +87,3 @@ Open a terminal and active your Twilio profile by running this command :
 twilio profiles:use identifer
 ```
 
-**The Output :**
-```bash!
-set "identifer" as active profile
-twilio-cli configuration saved to "/home/identifer/.twilio-cli/config.json"
-
-```
