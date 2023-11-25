@@ -1,85 +1,50 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <div id="app">
+    <ChatHeader />
+    <ChatMessages message="Hello! 😁 This is an incoming message 1" :isIncoming="true" />
+    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖2" :isOutgoing="true" />
+    <ChatMessages message="Hello! 😁 This is an incoming message 3" :isIncoming="true" />
+    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 4" :isOutgoing="true" />
+    <ChatMessages message="Hello! 😁 This is an incoming message 5" :isIncoming="true" />
+    <ChatMessages message="Hello! 😁 This is an incoming message 6" :isIncoming="true" />
+    <ChatMessages message="Hi there! 😋 This is an outgoing message, his is an outgoing messagehis is an outgoing messagehis is an outgoing messagehis is an outgoing message🦖 7" :isOutgoing="true" />
+    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 8" :isOutgoing="true" />
+    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 9  " :isOutgoing="true" />
+    <ChatMessages message="Hi there! 😋 This is an outgoing message, his is an outgoing messagehis is an outgoing messagehis is an outgoing messagehis is an outgoing message🦖 7" :isOutgoing="true" />
+    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 8" :isOutgoing="true" />
+    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 9  " :isIncoming="true" />
+    <ChatMessages message="Hi there! 😋 This is an outgoing message, his is an outgoing messagehis is an outgoing messagehis is an outgoing messagehis is an outgoing message🦖 7" :isOutgoing="true" />
+    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 8" :isIncoming="true" />
+    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 9  " :isIncoming="true" />
+    <ChatMessages message="Hi there! 😋 This is an outgoing message, his is an outgoing messagehis is adazkdjazbdnabv dhabdnazbdhj bajdbaz,ndb navdav zdvaz ndanzdbanb,nnbnbahgyu 7" :isIncoming="true" />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+    
+    <ChatInput @newMessage="addMessage" />
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import ChatHeader from '@/components/ui/ChatHeader.vue';
+import ChatMessages from '@/components/ui/ChatMessages.vue';
+import ChatInput from '@/components/ui/ChatInput.vue';
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
+export default defineComponent({
+  name: 'App',
+  components: {
+    ChatHeader,
+    ChatMessages,
+    ChatInput,
+  },
+  data() {
+    return {
+      messages: [] as string[],
+    };
+  },
+  methods: {
+    addMessage(message: string) {
+      this.messages.push(message);
+    },
+  },
+});
+</script>

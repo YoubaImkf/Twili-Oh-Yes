@@ -1,4 +1,5 @@
 <template>
+  <footer>
   <div class="chat-input-container">
     <textarea 
       v-model="newMessage"
@@ -11,6 +12,7 @@
     <SendButton></SendButton>
 
   </div>
+</footer>
 </template>
 
 <script lang="ts">
@@ -42,13 +44,20 @@ export default defineComponent({
     resizeTextArea() {
       const textarea = this.$refs.textarea as HTMLTextAreaElement;
       textarea.style.height = 'auto';
-      textarea.style.height = `${textarea.scrollHeight}px`;
+      textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`; 
     },
   },
 });
 </script>
 
 <style scoped>
+footer {
+  width: 100%;
+  bottom: 0;
+  position: fixed;
+  height: 80px;
+  background-color: #343541e3;;
+}
 .chat-input-container {
   height: 52px;
   max-height: 200px;
@@ -59,7 +68,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   text-align: center;
-
+  padding-inline: 10px;
 }
 
 .chat-input:focus {
@@ -81,6 +90,8 @@ export default defineComponent({
   border-radius: 20px;
   resize: none;
   overflow-y: hidden; 
+  overflow-y: auto; /* Make the textarea scrollable */
+  max-height: 200px; /* Set a maximum height */
 }
 
 

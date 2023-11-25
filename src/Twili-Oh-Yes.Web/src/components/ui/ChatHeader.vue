@@ -23,5 +23,6 @@ export default defineComponent({
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
   padding: 10px; 
   z-index: 1;
+  font-size: 0.63rem
 }
 </style>
