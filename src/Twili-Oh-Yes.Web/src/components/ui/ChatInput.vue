@@ -44,7 +44,7 @@ export default defineComponent({
     resizeTextArea() {
       const textarea = this.$refs.textarea as HTMLTextAreaElement;
       textarea.style.height = 'auto';
-      textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`; 
+      textarea.style.height = `${textarea.scrollHeight}px`;
     },
   },
 });
@@ -56,8 +56,10 @@ footer {
   bottom: 0;
   position: fixed;
   height: 80px;
-  background-color: #343541e3;;
+  background-color: #343541e3;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3)
 }
+
 .chat-input-container {
   height: 52px;
   max-height: 200px;
@@ -90,8 +92,7 @@ footer {
   border-radius: 20px;
   resize: none;
   overflow-y: hidden; 
-  overflow-y: auto; /* Make the textarea scrollable */
-  max-height: 200px; /* Set a maximum height */
+  max-height: 200px;
 }
 
 
