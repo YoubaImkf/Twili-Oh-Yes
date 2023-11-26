@@ -16,7 +16,14 @@ export class ExpressServer {
     private allowedSubDomain: string[]
   ) {
     this.httpServer = new http.Server(this.express);
-    this.io = new Server(this.httpServer);
+    
+    this.io = new Server(
+      this.httpServer, {
+      cors: {
+        origin: this.allowedSubDomain,
+      }
+    });
+
     this.express.use(express.json());
     this.express.use(urlencoded({ extended: false }));
     this.configureCorsPolicy();
@@ -62,7 +69,13 @@ export class ExpressServer {
 
   private configureWebSocket(): void {
     this.io.on("connection", (socket: Socket) => {
-      console.log("A user connected");
+      console.log("A client has just connected");
+
+      socket.on("disconnect", () => {
+        console.log("A client has disconnected");
+      });
+
     });
   }
+
 }
