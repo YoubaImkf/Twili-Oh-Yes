@@ -35,6 +35,12 @@ export class MessageService implements MessageInterface {
       }
     }
 
+    messages.sort((a, b) => {
+      const dateA = new Date(a.CreatedDate);
+      const dateB = new Date(b.CreatedDate);
+      return dateA.getTime() - dateB.getTime();
+    });
+    
     return messages;
   }
 
