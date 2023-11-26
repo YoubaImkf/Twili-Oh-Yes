@@ -1,33 +1,23 @@
 <template>
   <div id="app">
     <ChatHeader />
-    <ChatMessages message="Hello! 😁 This is an incoming message 1" :isIncoming="true" />
-    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖2" :isOutgoing="true" />
-    <ChatMessages message="Hello! 😁 This is an incoming message 3" :isIncoming="true" />
-    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 4" :isOutgoing="true" />
-    <ChatMessages message="Hello! 😁 This is an incoming message 5" :isIncoming="true" />
-    <ChatMessages message="Hello! 😁 This is an incoming message 6" :isIncoming="true" />
-    <ChatMessages message="Hi there! 😋 This is an outgoing message, his is an outgoing messagehis is an outgoing messagehis is an outgoing messagehis is an outgoing message🦖 7" :isOutgoing="true" />
-    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 8" :isOutgoing="true" />
-    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 9  " :isOutgoing="true" />
-    <ChatMessages message="Hi there! 😋 This is an outgoing message, his is an outgoing messagehis is an outgoing messagehis is an outgoing messagehis is an outgoing message🦖 7" :isOutgoing="true" />
-    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 8" :isOutgoing="true" />
-    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 9  " :isIncoming="true" />
-    <ChatMessages message="Hi there! 😋 This is an outgoing message, his is an outgoing messagehis is an outgoing messagehis is an outgoing messagehis is an outgoing message🦖 7" :isOutgoing="true" />
-    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 8" :isIncoming="true" />
-    <ChatMessages message="Hi there! 😋 This is an outgoing message 🦖 9  " :isIncoming="true" />
-    <ChatMessages message="Hi there! 😋 This is an outgoing message, his is an outgoing messagehis is adazkdjazbdnabv dhabdnazbdhj bajdbaz,ndb navdav zdvaz ndanzdbanb,nnbnbahgyu 7" :isIncoming="true" />
-
-    
+    <ChatMessages
+      v-for="(message, index) in messages"
+      :key="index"
+      :message="message.Body"
+      :direction="message.Direction"
+    />
     <ChatInput @newMessage="addMessage" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 import ChatHeader from '@/components/ui/ChatHeader.vue';
 import ChatMessages from '@/components/ui/ChatMessages.vue';
 import ChatInput from '@/components/ui/ChatInput.vue';
+import { MessageService } from '@/services/api/MessageService';
+import type { Message } from '@/models/Message';
 
 export default defineComponent({
   name: 'App',
@@ -38,13 +28,23 @@ export default defineComponent({
   },
   data() {
     return {
-      messages: [] as string[],
+      messages: [] as Message[],
     };
   },
   methods: {
-    addMessage(message: string) {
+    addMessage(message: Message) {
       this.messages.push(message);
     },
+  },
+  async mounted() {
+    // Fetch messages when the component is mounted
+    try {
+      const messageService = new MessageService();
+      const messages = await messageService.getAllMessageAsync();
+      this.messages = messages;
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    }
   },
 });
 </script>

@@ -8,7 +8,7 @@
       </svg>
     </div>
     <div v-if="showOptions" class="options-modal">
-      <button @click="modifyMessage" class="update-button">
+      <button @click="startEditing" class="update-button">
         <div class ="content-button">
         <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="SVGRepo_bgCarrier" stroke-width="0"/>
@@ -30,8 +30,11 @@
       </button>
     </div>
 
-    <div class="message-container">
+    <div class="message-container" v-if="!editing">
       <p>{{ message }}</p>
+    </div>
+    <div v-if="editing" class="edit-container">
+      <textarea v-model="editedMessage" @keydown.enter.prevent="saveEditedMessage"></textarea>
     </div>
   </div>
 </template>
@@ -46,26 +49,36 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    isOutgoing: {
-      type: Boolean,
-      default: false,
-    },  
-    isIncoming: {
-      type: Boolean as PropType<boolean>,
-      default: false,
-    },  
+    direction: {
+      type: String,
+      default: 'incoming', // You can set a default value if needed
+    },
+  },
+  computed: {
+    isOutgoing(): boolean {
+      return this.direction === 'outgoing';
+    },
+    isIncoming(): boolean {
+      return this.direction === 'incoming';
+    },
   },
   data() {
     return {
       showOptions: false,
+      editing: false,
+      editedMessage: this.message,
     };
   },
   methods: {
-    modifyMessage() {
-      this.showOptions = false;
-    },
     deleteMessage() {
       this.showOptions = false;
+    },
+    startEditing() {
+      this.editing = true;
+      this.showOptions = false;
+    },
+    saveEditedMessage() {
+      this.editing = false;
     },
   },
 });
@@ -121,9 +134,8 @@ export default defineComponent({
 
 .options-modal {
   position: absolute;
-  width: 40%;
-  top: 15%;
-  right: -10%;
+  top: 10%;
+  right: -7%;
   display: flex;
   flex-direction: column;
   background-color: #202123;
