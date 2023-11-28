@@ -92,7 +92,7 @@ export default defineComponent({
   word-wrap: break-word;
   clear: both;
   position: relative; 
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
   max-width: 450px;
   margin-inline: 2rem;
 }

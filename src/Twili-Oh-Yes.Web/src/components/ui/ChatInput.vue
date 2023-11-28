@@ -57,7 +57,7 @@ footer {
   position: fixed;
   height: 80px;
   background-color: #343541e3;
-  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3)
+  box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.3)
 }
 
 .chat-input-container {
