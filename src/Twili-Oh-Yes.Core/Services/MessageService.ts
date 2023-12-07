@@ -63,7 +63,7 @@ export class MessageService implements MessageInterface {
 
   public async deleteMessageAsync(key: number): Promise<void> {
       await this.deleteMessageFromRedis(key);
-      await this.deleteMessageFromTwilio(key);      
+      // await this.deleteMessageFromTwilio(key);      
   }
   
   public async outgoingMessage(body: string, to: string): Promise<Message> {
@@ -145,12 +145,12 @@ export class MessageService implements MessageInterface {
     await redisClient.del(redisKey);
   }
   
-  private async deleteMessageFromTwilio(key: number): Promise<void> {
-    const message = await this.getMessageAsync(key);
-  
-    if (message?.SmsSid) {
-      await this.twilioClient.messages(message.SmsSid).remove();
-    }
-  }
+  // private async deleteMessageFromTwilio(key: number): Promise<void> {
+  //   const message = await this.getMessageAsync(key);
+    
+  //   if (message?.SmsSid) {
+  //     await this.twilioClient.messages(message.SmsSid).remove();
+  //   }
+  // }
   //#endregion
 }

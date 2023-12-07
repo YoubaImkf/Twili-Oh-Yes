@@ -4,8 +4,7 @@
     <ChatMessages
       v-for="(message, index) in messages"
       :key="index"
-      :message="message.Body"
-      :direction="message.Direction"
+      :message="message"
     />
     <ChatInput @newMessage="addMessage" />
   </div>
@@ -37,7 +36,6 @@ export default defineComponent({
     },
   },
   async mounted() {
-    // Fetch messages when the component is mounted
     try {
       const messageService = new MessageService();
       const messages = await messageService.getAllMessageAsync();

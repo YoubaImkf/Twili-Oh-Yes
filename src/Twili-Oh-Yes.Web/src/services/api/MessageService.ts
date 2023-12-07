@@ -2,7 +2,7 @@ import axios from "axios";
 import type { AxiosInstance, AxiosRequestConfig } from "axios";
 import { Message } from "@/models/Message";
 
-const apiBaseUrl: string = "http://localhost:3000/api";
+const apiBaseUrl: string = "https://7adc-176-187-48-134.ngrok-free.app/api";
 
 export class MessageService {
   private axiosInstance: AxiosInstance;
@@ -76,7 +76,7 @@ export class MessageService {
   private getRequestConfig(): AxiosRequestConfig {
     return {
       headers: {
-        "ngrok-skip-browser-warning": "9887",
+        "ngrok-skip-browser-warning": "69420",
       },
     };
   }

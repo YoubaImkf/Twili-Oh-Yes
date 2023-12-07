@@ -1,5 +1,5 @@
 <template>
-  <div class="chat-message" :class="{ 'outgoing': isOutgoing, 'incoming': isIncoming }">
+  <div class="chat-message" :class="{ 'outgoing': isOutgoing(message), 'incoming': isIncoming(message) }">
     <div class="message-options" @click="showOptions = !showOptions">
       <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M4 9.5C5.38071 9.5 6.5 10.6193 6.5 12C6.5 13.3807 5.38071 14.5 4 14.5C2.61929 14.5 1.5 13.3807 1.5 12C1.5 10.6193 2.61929 9.5 4 9.5Z" fill="#ffffff"/>
@@ -31,35 +31,27 @@
     </div>
 
     <div class="message-container" v-if="!editing">
-      <p>{{ message }}</p>
+      <p>{{ message.Body }}</p>
     </div>
     <div v-if="editing" class="edit-container">
-      <textarea v-model="editedMessage" @keydown.enter.prevent="saveEditedMessage"></textarea>
+      <textarea v-model="editedMessage.Body" @keydown.enter.prevent="saveEditedMessage"></textarea>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
+import type { Message } from '@/models/Message';
+import { MessageService } from '@/services/api/MessageService';
+
+const messageService = new MessageService();
 
 export default defineComponent({
   name: 'ChatMessage',
   props: {
     message: {
-      type: String,
+      type: Object as PropType<Message>,
       required: true,
-    },
-    direction: {
-      type: String,
-      default: 'incoming', // You can set a default value if needed
-    },
-  },
-  computed: {
-    isOutgoing(): boolean {
-      return this.direction === 'outgoing';
-    },
-    isIncoming(): boolean {
-      return this.direction === 'incoming';
     },
   },
   data() {
@@ -70,15 +62,33 @@ export default defineComponent({
     };
   },
   methods: {
-    deleteMessage() {
+    async deleteMessage() {
       this.showOptions = false;
+      try {
+        await messageService.deleteMessageAsync(this.message.Id);
+      } catch (error) {
+        console.error('Error deleting message:', error);
+      }
     },
     startEditing() {
       this.editing = true;
       this.showOptions = false;
     },
-    saveEditedMessage() {
+    async saveEditedMessage() {
       this.editing = false;
+      try {
+        await messageService.updateMessageAsync(this.editedMessage);
+      } catch (error) {
+        console.error('Error update message:', error);
+      }
+    },
+    isOutgoing(message: Message): boolean {
+      return message.Direction === 'outgoing';
+    },
+    isIncoming(message: Message): boolean {
+      // Undefined is an incomling message because, when i sent incoming messages there were no Direction 'property' 
+      // (incoming message cost $money$ that why ...)
+      return message.Direction === undefined || message.Direction === 'incoming';
     },
   },
 });

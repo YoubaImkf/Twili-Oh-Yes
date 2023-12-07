@@ -1,4 +1,4 @@
 export enum Direction {
-    Outgoing= "Outgoing",
-    Incoming= "Incoming"
+    Outgoing= "outgoing",
+    Incoming= "incoming"
 }
