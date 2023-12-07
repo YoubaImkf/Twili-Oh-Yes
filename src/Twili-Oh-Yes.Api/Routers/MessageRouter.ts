@@ -11,13 +11,14 @@ export class MessageRouter {
     }
 
     private configureRoutes(): void {
+
         this.router.get("/", async (req: Request,res: Response) => { // #swagger.tags = ['Message']
             
             try {
                 const result = await this.messageController.getAllAsync();
                 res.status(200).json(result);
             } catch (error: unknown) {
-                res.status(500).json({ error: "Internal Server Error" });
+                res.status(500).json({ error: "An error occured while attempting to get all messgaes" });
             }
         });
 
@@ -31,7 +32,7 @@ export class MessageRouter {
                 if (error instanceof NotFound) {
                   res.status(404).send();
                 } else {
-                  res.status(500).json({ error: "Internal Server Error" });
+                  res.status(500).json({ error: "An error occured while attempting to get a specific message by key" });
                 }
               }
         });
@@ -46,7 +47,7 @@ export class MessageRouter {
                 if (error instanceof NotFound) {
                   res.status(404).send();
                 } else {
-                    res.status(500).json({ error: "Internal Server Error" });
+                    res.status(500).json({ error: "An error occured while attempting to delete a message" });
                 }
               }
         });
@@ -70,7 +71,7 @@ export class MessageRouter {
                 if (error instanceof NotFound){
                     res.status(404).send();
                 } else {
-                    res.status(500).json({ error: "Internal server error"});
+                    res.status(500).json({ error: "An error occured while attempting to update a message"});
                 }
             }
         });
@@ -82,7 +83,7 @@ export class MessageRouter {
                 const result = await this.messageController.outgoing(body, to);
                 res.status(201).json(result);
             } catch (error: unknown) {
-                res.status(500).json({ error: "Internal Server Error" });
+                res.status(500).json({ error: "An error occured while attempting to sending a message" });
             }
         });
 
@@ -92,7 +93,7 @@ export class MessageRouter {
                 const result = await this.messageController.incoming(smsSid);
                 res.status(200).json(result);
             } catch (error: unknown) {
-                res.status(500).json({ error: "Internal Server Error" });
+                res.status(500).json({ error: "An error occured while attempting to receive the message" });
             }
         });
     }
