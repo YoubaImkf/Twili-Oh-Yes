@@ -32,7 +32,8 @@ export default defineComponent({
   name: "SendButton",
   methods: {
     sendMessage() {
-      this.$emit("sendMessage"); // Emit event to handle sending message in ChatInput
+      // Emits the "sendMessage" event that chatInput will receive
+      this.$emit("sendMessage");
     },
   },
 });
@@ -45,6 +46,6 @@ export default defineComponent({
   border-radius: 100%;
   cursor: pointer;
   padding: 12px;
-  margin-left: 10px; 
+  margin-left: 10px;
 }
 </style>
