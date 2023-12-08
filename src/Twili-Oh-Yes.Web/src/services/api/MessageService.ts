@@ -2,7 +2,8 @@ import axios from "axios";
 import type { AxiosInstance, AxiosRequestConfig } from "axios";
 import { Message } from "@/models/Message";
 
-const apiBaseUrl: string = "https://8948-176-187-48-134.ngrok-free.app/api";
+const apiBaseUrl: string = `${import.meta.env.VITE_APP_API_BASE_URL}/api`|| "http://localhost:3000";
+const phoneNumber: string = import.meta.env.VITR_APP_PHONE_NUMBER || "";
 
 export class MessageService {
   private axiosInstance: AxiosInstance;
@@ -56,15 +57,12 @@ export class MessageService {
     }
   }
 
-  public async outgoingMessageAsync(
-    body: string,
-    to: string
-  ): Promise<Message> {
+  public async sendMessageAsync(body: string): Promise<Message> {
     try {
       const config = this.getRequestConfig();
       const message = await this.axiosInstance.post(
         "/message/outgoing",
-        { body, to },
+        { body, to: phoneNumber },
         config
       );
       return message.data;
@@ -75,6 +73,7 @@ export class MessageService {
 
   private getRequestConfig(): AxiosRequestConfig {
     return {
+      // This header is used to bypass the Ngrok Browser Warning
       headers: {
         "ngrok-skip-browser-warning": "69420",
       },
