@@ -6,20 +6,20 @@
       :key="index"
       :message="message"
     />
-    <ChatInput @newMessage="addMessage" />
+    <ChatInput />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue';
-import ChatHeader from '@/components/ui/ChatHeader.vue';
-import ChatMessages from '@/components/ui/ChatMessages.vue';
-import ChatInput from '@/components/ui/ChatInput.vue';
-import { MessageService } from '@/services/api/MessageService';
-import type { Message } from '@/models/Message';
+import { defineComponent } from "vue";
+import ChatHeader from "@/components/ui/ChatHeader.vue";
+import ChatMessages from "@/components/ui/ChatMessages.vue";
+import ChatInput from "@/components/ui/ChatInput.vue";
+import { MessageService } from "@/services/api/MessageService";
+import type { Message } from "@/models/Message";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   components: {
     ChatHeader,
     ChatMessages,
@@ -30,18 +30,13 @@ export default defineComponent({
       messages: [] as Message[],
     };
   },
-  methods: {
-    addMessage(message: Message) {
-      this.messages.push(message);
-    },
-  },
   async mounted() {
     try {
       const messageService = new MessageService();
       const messages = await messageService.getAllMessageAsync();
       this.messages = messages;
     } catch (error) {
-      console.error('Error fetching messages:', error);
+      console.error("Error fetching messages:", error);
     }
   },
 });
