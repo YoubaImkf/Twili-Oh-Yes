@@ -2,38 +2,24 @@ import express, { urlencoded } from "express";
 import cors, { CorsOptions } from "cors";
 import { ExpressRouter } from "./ExpressRouter";
 import swaggerUi from "swagger-ui-express";
-import http from "http";
-import { Server, Socket } from "socket.io";
 
 export class ExpressServer {
   private express = express();
-  private httpServer: http.Server;
-  private io: Server;
 
   constructor(
     private expressRouter: ExpressRouter,
     private port: string,
     private allowedSubDomain: string[]
   ) {
-    this.httpServer = new http.Server(this.express);
-    
-    this.io = new Server(
-      this.httpServer, {
-      cors: {
-        origin: this.allowedSubDomain,
-      }
-    });
-
     this.express.use(express.json());
     this.express.use(urlencoded({ extended: false }));
     this.configureCorsPolicy();
     this.configureRoutes();
     this.configureSwagger();
-    this.configureWebSocket();
   }
 
   bootstrap(): void {
-    this.httpServer.listen(this.port, () => {
+    this.express.listen(this.port, () => {
       console.log(`> Listening on port ${this.port}`);
     });
   }
@@ -66,16 +52,4 @@ export class ExpressServer {
       swaggerUi.setup(swaggerDocument)
     );
   }
-
-  private configureWebSocket(): void {
-    this.io.on("connection", (socket: Socket) => {
-      console.log("A client has just connected");
-
-      socket.on("disconnect", () => {
-        console.log("A client has disconnected");
-      });
-
-    });
-  }
-
 }
