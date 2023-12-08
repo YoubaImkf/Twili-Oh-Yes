@@ -1,40 +1,40 @@
-# Twili-Oh-Yes.Web2
+# Twili-Oh-Yes.Web
 
-This template should help get you started developing with Vue 3 in Vite.
+## Introduction 
+Integrating Twilio's application, users can send and receive SMS messages from a web interface. 
 
-## Recommended IDE Setup
+##  Pre-requisites :package:
+You need to have :
+* **Node.js** installed with npm;
+* [ngrok](https://ngrok.com/download): A free account is all that's necessary to get your authentification token;
+* Twilio account : to have your own free phone number;
+‎ 
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
+To install all dependencies :
+```bash
 npm install
-```
+``` 
+‎
+## Configuration 
 
-### Compile and Hot-Reload for Development
+### I) Add a .env file to the folder project source.
 
-```sh
-npm run dev
-```
+- Here a example of `.env ` file 📄
 
-### Type-Check, Compile and Minify for Production
+    ```=
+    VUE_APP_API_BASE_URL=
+    VUE_APP_PHONE_NUMBER=
+    ```
+### II) Run the project 
 
-```sh
-npm run build
-```
+- Direct you into the project folder
+
+    ```
+    cd src/Twili-Oh-Yes.Web
+    ```
+    
+- run the application
+
+    ```
+    npm run dev
+    ```
