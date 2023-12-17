@@ -21,20 +21,20 @@ npm install
 
 - Here a example of `.env ` file 📄
 
-    ```=
-    VUE_APP_API_BASE_URL=
-    VUE_APP_PHONE_NUMBER=
-    ```
+```=
+VUE_APP_API_BASE_URL=
+VUE_APP_PHONE_NUMBER=
+```
 ### II) Run the project 
 
-- Direct you into the project folder
+- Go to the project file
 
-    ```
-    cd src/Twili-Oh-Yes.Web
-    ```
+```
+cd src/Twili-Oh-Yes.Web
+```
     
 - run the application
 
-    ```
-    npm run dev
-    ```
+```
+npm run dev
+```

@@ -39,9 +39,16 @@ npm install
     TWILIO_AUTH_TOKEN=
     TWILIO_PHONE_NUMBER_SID=
     ```
+- Add a second `.env ` file 📄 inside the root folder Twilio-Oh-Yes.Web
+    ```=
+    VUE_APP_API_BASE_URL=
+    VUE_APP_PHONE_NUMBER=
+    ```
+
 ‎ 
 ### II) Login to your ngrok account
 ‎ 
+
 **1 ) [Install ngrok](https://ngrok.com/docs/getting-started/?os=linux)**
 ngrok will allow us to put our application on the internet.
 
@@ -85,5 +92,25 @@ You will be prompted for your `Account SID` and `Auth Token`, Notice that you mu
 Open a terminal and active your Twilio profile by running this command :
 ```bash
 twilio profiles:use identifer
+```
+
+### IIII) Run projects 
+
+- Go to the project file
+
+Run API : 
+```bash
+ cd src
+```
+    
+Run CLient :
+```bash
+cd src/Twili-Oh-Yes.Web
+```
+    
+- Tun the application by running
+
+```bash
+npm run dev
 ```
 
