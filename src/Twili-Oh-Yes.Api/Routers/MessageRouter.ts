@@ -104,7 +104,7 @@ export class MessageRouter {
         res
           .status(500)
           .json({
-            error: "An error occured while attempting to sending a message",
+            error: "An error occured while attempting to send a message",
           });
       }
     });
