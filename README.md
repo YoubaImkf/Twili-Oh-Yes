@@ -1,7 +1,7 @@
 # Twili-Oh-Yes 
 
 ## Introduction 
-Integrating Twilio's API, to send and receive SMS messages directly from a web interface. 
+Integrating Twilio's API, to send and receive SMS messages directly from a web interface. (Not really in real time 🤫)
 
 
 ###  Pre-requisites :package:
