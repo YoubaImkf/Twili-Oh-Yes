@@ -3,7 +3,7 @@ import type { AxiosInstance, AxiosRequestConfig } from "axios";
 import { Message } from "@/models/Message";
 
 const apiBaseUrl: string = `${import.meta.env.VITE_APP_API_BASE_URL}/api`|| "http://localhost:3000";
-const phoneNumber: string = import.meta.env.VITR_APP_PHONE_NUMBER || "";
+const phoneNumber: string = import.meta.env.VITE_APP_PHONE_NUMBER || "";
 
 export class MessageService {
   private axiosInstance: AxiosInstance;
