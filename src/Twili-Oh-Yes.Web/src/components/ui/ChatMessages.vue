@@ -141,12 +141,10 @@ export default defineComponent({
   methods: {
     async deleteMessage() {
       this.showOptions = false;
-      if (this.editedMessage.Body !== this.message.Body) {
-        try {
-          await messageService.deleteMessageAsync(this.message.Id);
-        } catch (error) {
-          console.error("Error deleting message:", error);
-        }
+      try {
+        await messageService.deleteMessageAsync(this.message.Id);
+      } catch (error) {
+        console.error("Error deleting message:", error);
       }
     },
     startEditing() {
@@ -155,10 +153,12 @@ export default defineComponent({
     },
     async saveEditedMessage() {
       this.editing = false;
-      try {
-        await messageService.updateMessageAsync(this.editedMessage);
-      } catch (error) {
-        console.error("Error updating message:", error);
+      if (this.editedMessage.Body !== this.message.Body) {
+        try {
+          await messageService.updateMessageAsync(this.editedMessage);
+        } catch (error) {
+          console.error("Error updating message:", error);
+        }
       }
     },
     isOutgoing(message: Message): boolean {
