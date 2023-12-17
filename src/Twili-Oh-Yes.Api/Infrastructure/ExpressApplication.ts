@@ -25,7 +25,7 @@ export class ExpressApplication {
     this.configureServerAllowedSubDomain();
     this.configureServices();
     this.configureExpressRouter();
-    this.configureServer();   
+    this.configureServer();
   }
 
   private configureEnvironment(): void {
@@ -57,7 +57,6 @@ export class ExpressApplication {
       this.allowedSubDomain
     );
   }
-
 
   //#region GET .env
   private getPort(): string {
