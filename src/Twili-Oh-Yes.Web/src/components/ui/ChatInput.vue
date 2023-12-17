@@ -45,6 +45,7 @@ export default defineComponent({
       if (this.newMessage.trim() !== "") {
         try {
           await messageService.sendMessageAsync(this.newMessage.trim());
+          this.$emit("message-send", this.newMessage);
           this.newMessage = "";
           this.resizeTextArea();
         } catch (error: unknown) {
@@ -94,7 +95,7 @@ footer {
   padding-inline: 18px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 14px;
   border-radius: 20px;
   resize: none;
   overflow-y: hidden;

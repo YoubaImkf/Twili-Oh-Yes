@@ -143,6 +143,7 @@ export default defineComponent({
       this.showOptions = false;
       try {
         await messageService.deleteMessageAsync(this.message.Id);
+        this.$emit("message-deleted", this.message.Id);
       } catch (error) {
         console.error("Error deleting message:", error);
       }
