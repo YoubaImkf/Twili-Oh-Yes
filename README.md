@@ -1,14 +1,14 @@
 # Twili-Oh-Yes 
 
 ## Introduction 
-Integrating Twilio's API, users can send and receive SMS messages directly from a web interface. 
+Integrating Twilio's API, to send and receive SMS messages directly from a web interface. 
 
 
 ###  Pre-requisites :package:
 You need to have :
 * **Node.js** installed with npm;
-* [ngrok](https://ngrok.com/download): A free account is all that's necessary to get your authentification token;
-* Twilio account : to have your own free phone number;
+* [Ngrok](https://ngrok.com/download): Create a free account to get your authentification token;
+* Twilio account : Create a twilio account to have your own free phone number;
 ‎ 
 
 To install all dependencies :
@@ -94,7 +94,7 @@ Open a terminal and active your Twilio profile by running this command :
 twilio profiles:use identifer
 ```
 
-### IIII) Run projects 
+### IV) Run projects 
 
 - Go to the project file
 
