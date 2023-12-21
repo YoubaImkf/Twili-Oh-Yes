@@ -84,11 +84,13 @@ VITE_APP_PHONE_NUMBER=
 ### II) Redis setup
 
 **1) Create your account**
+
 Here you go → [create-account](https://redis.com/try-free/?_gl=1*fghn33*_ga*MTE2NTk0OTU5LjE3MDMxODk0MDc.*_ga_8BKGRQKRPV*MTcwMzE4OTQwNi4xLjEuMTcwMzE4OTQxNi41MC4wLjA.*_gcl_au*MjU4MTQ5MDQ0LjE3MDMxODk0MDc.&_ga=2.47929760.665514104.1703189407-116594959.1703189407&utm_source=redisio&utm_medium=referral&utm_campaign=2023-09-try_free&utm_content=cu-redis_cloud_users)
 
-**2) Create a databse**
+**2) Create a database**
+This where you will access credentials you need `VITE_APP_API_BASE_URL`& `VITE_APP_PHONE_NUMBER`.
 
-**3) Connect your self on the redis extension (as you want)** 
+**3) Connect your self on the redis extension (optinal)** 
 
 ‎ 
 ### III) Login to your Twilio account
