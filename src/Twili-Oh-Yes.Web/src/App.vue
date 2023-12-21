@@ -7,7 +7,6 @@
       :message="message"
       @message-deleted="handleMessageDeleted"
       @message-send="handleMessageSent"
-
     />
     <ChatInput />
   </div>
@@ -37,7 +36,6 @@ export default defineComponent({
   },
   methods:{
     async getAllMessages() {
-
       const messages = await messageService.getAllMessageAsync();
       this.messages = messages;
     },

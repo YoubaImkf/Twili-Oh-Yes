@@ -45,8 +45,8 @@ export default defineComponent({
       if (this.newMessage.trim() !== "") {
         try {
           await messageService.sendMessageAsync(this.newMessage.trim());
-          this.$emit("message-send", this.newMessage);
           this.newMessage = "";
+          // this.$emit("message-send", this.newMessage);
           this.resizeTextArea();
         } catch (error: unknown) {
           console.error("Error sending message:", error);
