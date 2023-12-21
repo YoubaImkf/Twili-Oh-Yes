@@ -14,6 +14,8 @@ Before diving into the world of Twili-Oh-Yes, make sure you have the following i
 * **Node.js** with npm installed
 * [Ngrok](https://ngrok.com/download) - Sign up and grab your authentication token (There the `.exe`  in root folder, if you use windows)
 * [Twilio account](https://login.twilio.com/u/signup?state=hKFo2SBxNE9kNGRwRFhKbldPNTA2TllReXMycHJVZGphaEJHWaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIE05NVg3ekJCUGFrRXY0cHh2VDYyNU5tUmFKcEt0djh1o2NpZNkgTW05M1lTTDVSclpmNzdobUlKZFI3QktZYjZPOXV1cks) - Create one to acquire your own free phone number
+* [Redis Extension](https://marketplace.visualstudio.com/items?itemName=cweijan.vscode-redis-client) - used as database explorer
+
 
 To install all the necessary dependencies, simply run:
 
@@ -33,7 +35,7 @@ npm install
 ‎ 
 ## Configuration ⚙️
 
-### I) <u>Add `.env` files to the project</u>
+### I) Add `.env` files to the project
 
 Here's an example of a `.env` file 📄:
 ℹ️ *Add your ngrok url to `ALLOWED_SUB_DOMAIN`*
@@ -77,9 +79,19 @@ Additionally, add a second `.env` file 📄 inside the root folder Twilio-Oh-Yes
 VITE_APP_API_BASE_URL=
 VITE_APP_PHONE_NUMBER=
 ```
+‎ 
+
+### II) Redis setup
+
+**1) Create your account**
+Here you go → [create-account](https://redis.com/try-free/?_gl=1*fghn33*_ga*MTE2NTk0OTU5LjE3MDMxODk0MDc.*_ga_8BKGRQKRPV*MTcwMzE4OTQwNi4xLjEuMTcwMzE4OTQxNi41MC4wLjA.*_gcl_au*MjU4MTQ5MDQ0LjE3MDMxODk0MDc.&_ga=2.47929760.665514104.1703189407-116594959.1703189407&utm_source=redisio&utm_medium=referral&utm_campaign=2023-09-try_free&utm_content=cu-redis_cloud_users)
+
+**2) Create a databse**
+
+**3) Connect your self on the redis extension (as you want)** 
 
 ‎ 
-### II) <u>Login to your Twilio account</u>
+### III) Login to your Twilio account
 
 **1) Create your account**
 
@@ -115,7 +127,7 @@ twilio profiles:use identifier
 Follow this link to valid you phone number and send SMS : https://console.twilio.com/us1/develop/phone-numbers/manage/verified
 ‎ 
 
-### III) <u>Run the script `./UpdateTwilioWebhook.sh`</u>
+### IV) Run the script `./UpdateTwilioWebhook.sh`
 
 Run the script `./UpdateTwilioWebhook.sh` to update the Incoming webhook to receive incoming SMS by running :
 ```bash
@@ -125,7 +137,7 @@ Run the script `./UpdateTwilioWebhook.sh` to update the Incoming webhook to rece
 ℹ️ *if you are on windows use **git bash***
 ‎ 
 
-### IV) <u>Login to your Ngrok account</u>
+### V) Login to your Ngrok account
 
 **1) [Install Ngrok](https://ngrok.com/docs/getting-started/?os=linux)**
 
@@ -147,7 +159,7 @@ Ngrok will enable us to expose our application to the internet.
 You will get your URL on the ngrok console.
 
 ‎ 
-### V) <u>Running the Projects 🚀</u>
+### VI) Running the Projects 🚀
 
 Now that everything is set up, let's get your Twili-Oh-Yes application up and running. 
 Follow these simple steps:
