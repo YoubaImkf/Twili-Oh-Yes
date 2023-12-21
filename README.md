@@ -23,10 +23,10 @@ npm install
 
 ### Application Screen : 
 
-** 🔹 The Home Page `http://localhost:5173/`**
+**🔹 The Home Page `http://localhost:5173/`**
 ![Twili-Oh-Yes HomePage](https://github.com/YoubaImkf/Twili-Oh-Yes/blob/main/public/img/Twili-Oh-Yes_HomePage.png)
 
-** 🔹 The Swagger Page `ngrok-url__OR__localhost/swagger`**
+**🔹 The Swagger Page `ngrok-url__OR__localhost/swagger`**
 ![Twili-Oh-Yes Swagger](https://github.com/YoubaImkf/Twili-Oh-Yes/blob/main/public/img/Twili-Oh-Yes_Swagger.png)
 
 
