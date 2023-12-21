@@ -57,16 +57,16 @@ TWILIO_AUTH_TOKEN=
 TWILIO_PHONE_NUMBER_SID=
 ```
 
-* `TWILIO_PHONE_NUMBER` ↷
+* `TWILIO_PHONE_NUMBER` →
 https://console.twilio.com/us1/develop/phone-numbers/manage/incoming
 
-* `TWILIO_ACCOUNT_SID` ↷ 
+* `TWILIO_ACCOUNT_SID` → 
 https://console.twilio.com/us1/account/manage-account/general-settings
 
-* `TWILIO_AUTH_TOKEN` ↷ 
+* `TWILIO_AUTH_TOKEN` → 
 https://console.twilio.com/us1/account/keys-credentials/api-keys
 
-* `TWILIO_PHONE_NUMBER_SID` ↷ 
+* `TWILIO_PHONE_NUMBER_SID` → 
 Go to [phoneNumber](https://console.twilio.com/us1/develop/phone-numbers/manage/incoming) click on your phoneNumber then go to properties.
 ‎ 
 
