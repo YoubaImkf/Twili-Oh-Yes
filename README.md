@@ -132,7 +132,7 @@ twilio profiles:use identifier
 
 **3) Add your phone number to twilio**
 
-Follow this link to valid you phone number and send SMS : https://console.twilio.com/us1/develop/phone-numbers/manage/verified
+Follow this link to valid you phone number and be able to send SMS → https://console.twilio.com/us1/develop/phone-numbers/manage/verified
 ‎ 
 
 ### IV) Run the script `./UpdateTwilioWebhook.sh`
