@@ -91,7 +91,7 @@ Here you go → [create-account](https://redis.com/try-free/?_gl=1*fghn33*_ga*MT
 
 This where you will access credentials you need `VITE_APP_API_BASE_URL`& `VITE_APP_PHONE_NUMBER`.
 
-**3) Optinal
+**3) Optional**
 
 - Instal [redis](https://redis.io/docs/install/install-redis/) to use CLI .
 - Connect your self on the redis extension.
