@@ -33,7 +33,7 @@ npm install
 ‎ 
 ## Configuration ⚙️
 
-### __I) Add `.env` files to the project__
+### I) <u>Add `.env` files to the project</u>
 
 Here's an example of a `.env` file 📄:
 ℹ️ *Add your ngrok url to `ALLOWED_SUB_DOMAIN`*
@@ -79,7 +79,7 @@ VITE_APP_PHONE_NUMBER=
 ```
 
 ‎ 
-### II) __Login to your Twilio account__
+### II) <u>Login to your Twilio account</u>
 
 **1) Create your account**
 
@@ -115,7 +115,7 @@ twilio profiles:use identifier
 Follow this link to valid you phone number and send SMS : https://console.twilio.com/us1/develop/phone-numbers/manage/verified
 ‎ 
 
-### III) __Run the script `./UpdateTwilioWebhook.sh`__
+### III) <u>Run the script `./UpdateTwilioWebhook.sh`</u>
 
 Run the script `./UpdateTwilioWebhook.sh` to update the Incoming webhook to receive incoming SMS by running :
 ```bash
@@ -125,7 +125,7 @@ Run the script `./UpdateTwilioWebhook.sh` to update the Incoming webhook to rece
 ℹ️ *if you are on windows use **git bash***
 ‎ 
 
-### IV) __Login to your Ngrok account__
+### IV) <u>Login to your Ngrok account</u>
 
 **1) [Install Ngrok](https://ngrok.com/docs/getting-started/?os=linux)**
 
@@ -147,7 +147,7 @@ Ngrok will enable us to expose our application to the internet.
 You will get your URL on the ngrok console.
 
 ‎ 
-### V) __Running the Projects 🚀__
+### V) <u>Running the Projects 🚀</u>
 
 Now that everything is set up, let's get your Twili-Oh-Yes application up and running. 
 Follow these simple steps:
