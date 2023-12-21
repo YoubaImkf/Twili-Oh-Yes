@@ -12,7 +12,7 @@ Twili-Oh-Yes is your gateway to seamlessly integrate Twilio's API for sending an
 Before diving into the world of Twili-Oh-Yes, make sure you have the following in place:
 
 * **Node.js** with npm installed
-* [Ngrok](https://ngrok.com/download) - Sign up and grab your authentication token
+* [Ngrok](https://ngrok.com/download) - Sign up and grab your authentication token (There the `.exe`  in root folder, if you use windows)
 * [Twilio account](https://login.twilio.com/u/signup?state=hKFo2SBxNE9kNGRwRFhKbldPNTA2TllReXMycHJVZGphaEJHWaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIE05NVg3ekJCUGFrRXY0cHh2VDYyNU5tUmFKcEt0djh1o2NpZNkgTW05M1lTTDVSclpmNzdobUlKZFI3QktZYjZPOXV1cks) - Create one to acquire your own free phone number
 
 To install all the necessary dependencies, simply run:
